@@ -27,8 +27,8 @@ public class QaExtentReport {
 		String NewDate = d.format(date);
 
 		report = new ExtentReports();
-
-		File file = new File("C:\\Users\\Balkrishna.Sharma\\git\\saudiaproject\\Saudia\\Reports\\" + NewDate + " report" + ".html");
+	
+		File file = new File("C:\\Users\\Prince.Chaurasia\\git\\saudiaproject\\Saudia\\Reports\\" + NewDate + " report" + ".html");
 	
 		ExtentSparkReporter sparkreporter = new ExtentSparkReporter(file);
 		ExtentSparkReporterConfig config = sparkreporter.config();
@@ -60,7 +60,7 @@ public class QaExtentReport {
 
 		TakesScreenshot ts = (TakesScreenshot) QaBrowser.driver;
 		File Source = ts.getScreenshotAs(OutputType.FILE);
-		File Dest = new File("C:\\Users\\Balkrishna.Sharma\\git\\saudiaproject\\Saudia\\Screenshot\\" + NewDate + " " + text + ".jpg");
+		File Dest = new File("C:\\Users\\Prince.Chaurasia\\git\\saudiaproject\\Saudia\\Screenshot\\" + NewDate + " " + text + ".jpg");
 	//	C:\\Users\\Ankur.Yadav\\git\\ProjectQuadlabs\\Reports\\
 		
 		FileUtils.copyFile(Source, Dest);

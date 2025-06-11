@@ -741,5 +741,14 @@ public class QaRobot extends QaExtentReport {
 
 		// }
 	}
+	public static void PassValue3(String Locator, String value) throws Exception {
+		Thread.sleep(1000);
+		getWebElement(Locator).clear();
+		Thread.sleep(700);
+		getWebElement(Locator).sendKeys(value);
+
+//		test.log(Status.INFO, Text);
+
+	}
 
 }

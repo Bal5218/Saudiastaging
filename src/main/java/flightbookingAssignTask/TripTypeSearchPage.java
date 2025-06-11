@@ -551,7 +551,99 @@ public class TripTypeSearchPage {
 			}
 		}
 	}
+	public static void selectDateInCalendarOneWay2(String Day, String Month, String Year)
+			throws ParseException, InterruptedException {
+		Date date = new Date();
+		DateFormat d = new SimpleDateFormat("dd-MM-yyyy");
+		String NewDate = d.format(date);
+		Date date1 = d.parse(NewDate);
+		System.out.println(date1);
 
+		String currentMonthNumber = "00";
+		if (Month.equalsIgnoreCase("JAN")) {
+			currentMonthNumber = "01";
+		} else if (Month.equalsIgnoreCase("FEB")) {
+			currentMonthNumber = "02";
+		} else if (Month.equalsIgnoreCase("MAR")) {
+			currentMonthNumber = "03";
+		} else if (Month.equalsIgnoreCase("APR")) {
+			currentMonthNumber = "04";
+		} else if (Month.equalsIgnoreCase("MAY")) {
+			currentMonthNumber = "05";
+		} else if (Month.equalsIgnoreCase("JUN")) {
+			currentMonthNumber = "06";
+		} else if (Month.equalsIgnoreCase("JUL")) {
+			currentMonthNumber = "07";
+		} else if (Month.equalsIgnoreCase("AUG")) {
+			currentMonthNumber = "08";
+		} else if (Month.equalsIgnoreCase("SEP")) {
+			currentMonthNumber = "09";
+		} else if (Month.equalsIgnoreCase("OCT")) {
+			currentMonthNumber = "10";
+		} else if (Month.equalsIgnoreCase("NOV")) {
+			currentMonthNumber = "11";
+		} else if (Month.equalsIgnoreCase("DEC")) {
+			currentMonthNumber = "12";
+		}
+
+		Date date2 = d.parse(Day + "-" + Integer.parseInt(currentMonthNumber) + "-" + Year);
+		System.out.println(date2);
+
+		QaExtentReport.test.log(Status.INFO, "<b><i>Select Date  </i></b>" + Day + "-" + Month + "-" + Year);
+//		QaBrowser.driver.findElement(By.xpath("//input[@id='txtFlightDepartureDate']")).clear();
+
+		if (Integer.parseInt(Day) > 31) {
+			System.out.println("Invalid date provided " + Day + "-" + Month + "-" + Year);
+			QaExtentReport.test.log(Status.FAIL,
+					"<b><i>Invalid date provided  </i></b>" + Day + "-" + Month + "-" + Year);
+			throw new ExceptionClass("Invalid date provided " + Day + "-" + Month + "-" + Year);
+		}
+
+		if (Month.equals("Feb") && Integer.parseInt(Day) > 28) {
+			System.out.println("Invalid date provided " + Day + "-" + Month + "-" + Year);
+			QaExtentReport.test.log(Status.FAIL,
+					"<b><i>Invalid date provided  </i></b>" + Day + "-" + Month + "-" + Year);
+			throw new ExceptionClass("Invalid date provided " + Day + "/" + Month + "/" + Year);
+		}
+		Thread.sleep(5000);
+		String monthYear = QaBrowser.driver.findElement(By.xpath("//b[contains(text(),'JUN 2025')]"))
+				.getText();
+		String month = monthYear.split(" ")[0];// APR
+		String year = monthYear.split(" ")[1];// 1991
+//
+//		if (date2.before(date1)) {
+//			System.out.println("Invalid date provided " + Day + "-" + Month + "-" + Year);
+//			QaExtentReport.test.log(Status.FAIL,
+//					"<b><i>Invalid date provided  </i></b>" + Day + "-" + Month + "-" + Year);
+//			throw new ExceptionClass("Invalid date provided " + Day + "-" + Month + "-" + Year);
+//		} else {
+		while (!(month.equals(Month) && year.equals(Year))) {
+			WebElement Next = QaBrowser.driver.findElement(By.xpath("(//div[@class='calendar-header']//button)[2]"));
+			JavascriptExecutor js2 = (JavascriptExecutor) QaBrowser.driver;
+			js2.executeScript("arguments[0].click()", Next);
+//				QaBrowser.driver
+//						.findElement(By.xpath("(//span[@class='mat-mdc-button-persistent-ripple mdc-fab__ripple'])[2]"))
+//						.click();
+			// b[text()='MAR 1991']
+			monthYear = QaBrowser.driver.findElement(By.xpath("//div[@class='f-col custom-calendar-value']")).getText();
+			month = monthYear.split(" ")[0];
+			year = monthYear.split(" ")[1];
+		}
+
+		QaBrowser.driver.findElement(By.xpath("//div[text()='" + Day + "']  ")).click();
+//			List<WebElement> allDates = QaBrowser.driver.findElements(By.xpath(
+//					"//mat-tab-body[@id='mat-tab-content-0-0']/div/div/app-booking-trip/form/div/section/div/div[2]/div[1]/app-one-way-calendar/div/div/div[3]/table/tbody/tr/td/div/span[2]"));
+//			for (WebElement ele : allDates) {
+//				String dt = ele.getText();
+//				if (dt.equalsIgnoreCase(Day)) {
+//					ele.click();
+//					break;
+//				}
+//			}
+	}
+//	}
+
+	
 	public static void selectDateInCalendarOneWay1(String Day, String Month, String Year)
 			throws ParseException, InterruptedException {
 		Date date = new Date();

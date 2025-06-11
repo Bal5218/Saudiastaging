@@ -54,7 +54,7 @@ public class Listener extends TestBase implements ITestListener {
 				TakesScreenshot ts = (TakesScreenshot) QaBrowser.driver;
 				File Source = ts.getScreenshotAs(OutputType.FILE);
 				File Dest = new File(
-						"C:\\Users\\Balkrishna.Sharma\\Desktop\\saudiaproject\\Saudia\\Screenshot\\" + NewDate + " " + text + ".jpg");
+						"C:\\Users\\Prince.Chaurasia\\git\\saudiaproject\\Saudia\\Screenshot\\" + NewDate + " " + text + ".jpg");
 				FileUtils.copyFile(Source, Dest);
 				QaExtentReport.test.log(Status.FAIL, "<b><i>Screenshot for Fail Test</i></b>");
 				QaExtentReport.test.log(Status.FAIL, "<b><i>Fail Test</i></b>");
