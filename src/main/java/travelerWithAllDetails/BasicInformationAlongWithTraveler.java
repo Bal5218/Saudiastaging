@@ -38,6 +38,7 @@ public class BasicInformationAlongWithTraveler {
 			String countrycode, String emergencysave, String Salutation, String FirstName, String LastName,
 			String Gender, String Relation, String Email, String Countrycode, String Nationality, String Documenttype,
 			String issueplace, String savecancildependent,String travelArranger,String preference,String Shorthaulseatpreference
+			,String preferedLoyality,String Airline
 
 	) throws Throwable {
 		QaExtentReport.test = QaExtentReport.report.createTest(TestCaseId + " - " + TCType + " - " + TestScenario);
@@ -144,10 +145,10 @@ public class BasicInformationAlongWithTraveler {
 		 * //div[contains(text(),'Saved dependents')] here , we are going to save
 		 * dependent
 		 */
-		SaveDependent.savedependent(DateofBirth, IssuingCountry, Validtity, ExpiryDate, Salutation, FirstName, LastName,
+		SaveDependent.savedependent(DateofBirth, IssuingCountry, Validtity, ExpiryDate,stop,maxLayover,classprefere,preferredonline, Salutation, FirstName, LastName,
 				Gender, Relation, Email, Countrycode, Nationality, Documenttype,
 
-			issueplace, savecancildependent,preference,selectlonghaulmealpreference,Shorthaulseatpreference);
+			issueplace, savecancildependent,preference,selectlonghaulmealpreference,Shorthaulseatpreference,preferedLoyality,Airline);
 		/**
 		 * manager and deligation setting.
 		 * 

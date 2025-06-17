@@ -1,11 +1,15 @@
 package travelerWithAllDetails;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import addTraveler.GenericUtility;
 import flightbookingAssignTask.TripTypeSearchPage;
@@ -15,10 +19,11 @@ import utilities.QaRobot;
 
 public class SaveDependent {
 	public static void savedependent(String DateofBirth, String IssuingCountry, String Validtity, String ExpiryDate,
-			String Salutation, String FirstName, String LastName, String Gender, String Relation, String Email,
-			String Countrycode, String Nationality, String Documenttype, String issueplace, String savecancildependent,String preference,
-			String selectlonghaulmealpreference,String Shorthaulseatpreference )
-			throws Throwable {
+			String stop, String maxLayover, String classprefere, String preferredonline, String Salutation,
+			String FirstName, String LastName, String Gender, String Relation, String Email, String Countrycode,
+			String Nationality, String Documenttype, String issueplace, String savecancildependent, String preference,
+			String selectlonghaulmealpreference, String Shorthaulseatpreference, String preferedLoyality,
+			String Airline) throws Throwable {
 		QaBrowser.driver.findElement(By.xpath("//div[contains(text(),'Saved dependents')]")).click();
 		Thread.sleep(1000);
 		QaBrowser.driver.findElement(By.xpath("//div[contains(text(),'Dependents details')]")).click();
@@ -104,22 +109,26 @@ public class SaveDependent {
 			QaBrowser.driver.findElement(By.xpath("//div[text()='Place of issue']/../..//input")).click();
 			GenericUtility.handleMultipleSuggestation("//ng-dropdown-panel//div/span", issueplace);
 			QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Valid From']/../..//input")).click();
-
+			Thread.sleep(1000);
 			QaBrowser.driver.findElement(By.xpath("//div[text()=' 1990 – 2013 ']")).click();
+			Thread.sleep(2000);
 			String[] DateSelection1 = Validtity.split("-");
 			String expDate1 = DateSelection1[0];// 20
 			String month1 = DateSelection1[1];// AUG
 			String year1 = DateSelection1[2];// 1991
 
 			TripTypeSearchPage.selectDateInCalendarOneWay1(expDate1, month1, year1);
-			Thread.sleep(200);
+			Thread.sleep(1200);
 			try {
-				GenericUtility.clickConfirmButton("//span[contains(text(),'Confirm')]");
+
+				 GenericUtility.clickConfirmButton("//span[contains(text(),'Confirm')]");
 
 			} catch (ElementClickInterceptedException e) {
 				Thread.sleep(2000);
 				e.printStackTrace();
-				WebElement A = QaBrowser.driver.findElement(By.xpath("//span[contains(text(),'Confirm')]"));
+				WebElement A = QaBrowser.driver.findElement(By.xpath("//span[text()='Confirm']"));
+				WebDriverWait wait = new WebDriverWait(QaBrowser.driver, Duration.ofSeconds(2000));
+				wait.until(ExpectedConditions.elementToBeClickable(A));
 				JavascriptExecutor js = (JavascriptExecutor) QaBrowser.driver;
 				js.executeScript("arguments[0].click()", A);
 
@@ -307,7 +316,8 @@ public class SaveDependent {
 			break;
 
 		case "Redress Number":
-			WebElement redressnumber = QaBrowser.driver.findElement(By.xpath("//mat-label[contains(text(),'Redress number')]/../..//input"));
+			WebElement redressnumber = QaBrowser.driver
+					.findElement(By.xpath("//mat-label[contains(text(),'Redress number')]/../..//input"));
 			redressnumber.click();
 			redressnumber.sendKeys("987654321");
 
@@ -317,10 +327,91 @@ public class SaveDependent {
 		boolean aa = Boolean.parseBoolean(preference);
 		while (aa) {
 			QaBrowser.driver.findElement(By.xpath("(//h4[text()=' Preference ']/../../..//span)[3]")).click();
-			QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Longhaul Seat Preference']/../..//mat-select")).click();
-			GenericUtility.handleMultipleSuggestation("//div[contains(@id,'cdk-overlay-')]//mat-option/span", selectlonghaulmealpreference);
-			QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Shorthaul Seat Preferences']/../..//mat-select")).click();
-			GenericUtility.handleMultipleSuggestation("//div[contains(@id,'cdk-overlay-')]//mat-option/span", Shorthaulseatpreference);
+			QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Longhaul Seat Preference']/../..//mat-select"))
+					.click();
+			GenericUtility.handleMultipleSuggestation("//div[contains(@id,'cdk-overlay-')]//mat-option/span",
+					selectlonghaulmealpreference);
+			QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Shorthaul Seat Preferences']/../..//mat-select"))
+					.click();
+			GenericUtility.handleMultipleSuggestation("//div[contains(@id,'cdk-overlay-')]//mat-option/span",
+					Shorthaulseatpreference);
+			WebElement mealpre = QaBrowser.driver.findElement(By.xpath("//input[@formcontrolname=\"mealPref\"]"));
+			mealpre.click();
+			mealpre.sendKeys("987654321");
+
+			WebElement otherpre = QaBrowser.driver
+					.findElement(By.xpath("//mat-label[contains(text(),'Other Preference')]/../..//input"));
+			otherpre.click();
+			otherpre.sendKeys("9876123");
+			QaBrowser.driver
+					.findElement(By.xpath("//mat-label[contains(text(),'Stop Over Preference')]/../..//mat-select"))
+					.click();
+			GenericUtility.handleMultipleSuggestation("//div[contains(@id,'cdk-overlay-')]//mat-option/span", stop);
+			WebElement redresspreference = QaBrowser.driver
+					.findElement(By.xpath("//mat-label[text()='Redress Preference']/../..//input"));
+			redresspreference.click();
+			redresspreference.sendKeys("987654321");
+			QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Class Preference']/../..//mat-select")).click();
+			GenericUtility.handleMultipleSuggestation("//div[contains(@id,'cdk-overlay-')]//mat-option/span",
+					classprefere);
+			QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Max Layout Preference']/../..//mat-select"))
+					.click();
+			try {
+				GenericUtility.handleMultipleSuggestation("//div[contains(@id,'cdk-overlay-')]//mat-option/span",
+						maxLayover);
+			} catch (StaleElementReferenceException e) {
+				e.printStackTrace();
+				GenericUtility.handleMultipleSuggestation("//div[contains(@id,'cdk-overlay-')]//mat-option/span",
+						maxLayover);
+			}
+			WebElement tsaCheck = QaBrowser.driver
+					.findElement(By.xpath("//mat-label[text()='Tsa Precheck/Known Traveler Number']/../..//input"));
+			tsaCheck.click();
+			tsaCheck.sendKeys("TT1287977");
+			QaBrowser.driver.findElement(By.xpath("//div[text()='Select Airlines']/../..//input")).click();
+			GenericUtility.handleMultipleSuggestation("//ng-dropdown-panel//div/span", preferredonline);
+
+			break;
+		}
+		// h4[text()=' Preferred Loyalty ']/../../..//span[2]
+		boolean aaa = Boolean.parseBoolean(preferedLoyality);
+		while (aaa) {
+			QaBrowser.driver.findElement(By.xpath("//h4[text()=' Preferred Loyalty ']/../../..//span[2]")).click();
+			QaBrowser.driver
+					.findElement(By.xpath(
+							"//div[text()='Airline']/ancestor::div[@class=\"ng-value-container\"]/child::div[2]/input"))
+					.click();
+			GenericUtility.handleMultipleSuggestation("//ng-dropdown-panel//div/span", Airline);
+			try {
+			WebElement loyal = QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Loyalty Number']/../..//input"));
+			loyal.click();
+			loyal.sendKeys("AS987654");
+			
+			}catch(ElementClickInterceptedException e) {
+				WebElement loyal = QaBrowser.driver.findElement(By.xpath("//mat-label[text()='Loyalty Number']/../..//input"));
+				loyal.click();
+				loyal.sendKeys("AS987654");
+				
+			}
+			String[] DateSelection2121 = ExpiryDate.split("-");
+			String expDate2121 = DateSelection2121[0];// 20
+			String month2121 = DateSelection2121[1];// AUG
+			String year2121 = DateSelection2121[2];// 1991
+
+			TripTypeSearchPage.selectDateInCalendarOneWay1(expDate2121, month2121, year2121);
+			Thread.sleep(200);
+			try {
+				GenericUtility.clickConfirmButton("//span[contains(text(),'Confirm')]");
+
+			} catch (ElementClickInterceptedException e) {
+				Thread.sleep(2000);
+				e.printStackTrace();
+				WebElement A = QaBrowser.driver.findElement(By.xpath("//span[contains(text(),'Confirm')]"));
+				JavascriptExecutor js = (JavascriptExecutor) QaBrowser.driver;
+				js.executeScript("arguments[0].click()", A);
+
+			}
+			
 			
 			
 			break;

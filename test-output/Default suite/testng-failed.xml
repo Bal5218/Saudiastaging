@@ -3,12 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test name="Default test(failed)">
     <classes>
-      <class name="travelerWithAllDetails.BasicInformationAlongWithTraveler">
+      <class name="CompanyMangement.CompanyDetails">
         <methods>
-          <include name="addBsicInformation" invocation-numbers="0"/>
-          <include name="After_Test"/>
+          <include name="editCompanyDetails" invocation-numbers="0"/>
         </methods>
-      </class> <!-- travelerWithAllDetails.BasicInformationAlongWithTraveler -->
+      </class> <!-- CompanyMangement.CompanyDetails -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
